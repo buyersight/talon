@@ -15,7 +15,7 @@ from six.moves import zip
 from functools import reduce
 
 
-def features(sender=''):
+def features():
     '''Returns a list of signature features.'''
     return [
         # This one isn't from paper.
@@ -42,8 +42,6 @@ def features(sender=''):
         # Percentage of punctuation symbols in the line is larger than 50%
         lambda line: 1 if punctuation_percent(line) > 50 else 0,
         # Percentage of punctuation symbols in the line is larger than 90%
-        lambda line: 1 if punctuation_percent(line) > 90 else 0,
-        contains_sender_names(sender)
         ]
 
 

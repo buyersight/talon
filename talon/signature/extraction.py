@@ -30,13 +30,13 @@ RE_REVERSE_SIGNATURE = re.compile(r'''
 ''', re.I | re.X | re.M | re.S)
 
 
-def is_signature_line(line, sender, classifier):
+def is_signature_line(line, classifier):
     '''Checks if the line belongs to signature. Returns True or False.'''
-    data = numpy.array(build_pattern(line, features(sender))).reshape(1, -1)
+    data = numpy.array(build_pattern(line, features())).reshape(1, -1)
     return classifier.predict(data) > 0
 
 
-def extract(body, sender):
+def extract(body):
     """Strips signature from the body of the message.
 
     Returns stripped body and signature as a tuple.
@@ -47,23 +47,22 @@ def extract(body, sender):
 
         body = body.strip()
 
-        if has_signature(body, sender):
-            lines = body.splitlines()
+        lines = body.splitlines()
 
-            markers = _mark_lines(lines, sender)
-            text, signature = _process_marked_lines(lines, markers)
+        markers = _mark_lines(lines)
+        text, signature = _process_marked_lines(lines, markers)
 
-            if signature:
-                text = delimiter.join(text)
-                if text.strip():
-                    return (text, delimiter.join(signature))
+        if signature:
+            text = delimiter.join(text)
+            if text.strip():
+                return (text, delimiter.join(signature))
     except Exception as e:
         log.exception('ERROR when extracting signature with classifiers')
 
     return (body, None)
 
 
-def _mark_lines(lines, sender):
+def _mark_lines(lines):
     """Mark message lines with markers to distinguish signature lines.
 
     Markers:
@@ -92,7 +91,7 @@ def _mark_lines(lines, sender):
         j = len(lines) - len(candidate) + i
         if not line.strip():
             markers[j] = 'e'
-        elif is_signature_line(line, sender, EXTRACTOR):
+        elif is_signature_line(line, EXTRACTOR):
             markers[j] = 's'
 
     return "".join(markers)
