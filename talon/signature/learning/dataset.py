@@ -146,7 +146,8 @@ def build_extraction_dataset(folder, dataset_filename,
     if os.path.exists(dataset_filename):
         os.remove(dataset_filename)
     with open(dataset_filename, 'a') as dataset:
-        for filename in os.listdir(folder):
+        for filename in [f for f in os.listdir(folder) if not f.startswith('.')]:
+            print(filename)
             filename = os.path.join(folder, filename)
             sender, msg = parse_msg_sender(filename, sender_known)
             if not sender or not msg:
@@ -155,6 +156,8 @@ def build_extraction_dataset(folder, dataset_filename,
             for i in range(1, min(SIGNATURE_MAX_LINES,
                                   len(lines)) + 1):
                 line = lines[-i]
+                if len(line) == 0:
+                    continue
                 label = -1
                 if line[:len(SIGNATURE_ANNOTATION)] == \
                         SIGNATURE_ANNOTATION:
