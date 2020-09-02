@@ -163,7 +163,7 @@ def build_extraction_dataset(folder, dataset_filename,
                 elif line[:len(REPLY_ANNOTATION)] == REPLY_ANNOTATION:
                     line = line[len(REPLY_ANNOTATION):]
 
-                X = build_pattern(line, features(sender))
+                X = build_pattern(line, features())
                 X.append(label)
                 labeled_pattern = ','.join([str(e) for e in X])
                 dataset.write(labeled_pattern + '\n')
