@@ -177,7 +177,7 @@ def punctuation_percent(s):
     >>> punctuation_percent("q,w.")
     50.0
     '''
-    return categories_percent(s, ['Po'])
+    return categories_percent(s, ['Pc','Pd','Pe','Pf','Pi','Po','Ps','Sc','Sk','Sm','So'])
 
 
 def capitalized_words_percent(s):
