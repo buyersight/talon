@@ -29,11 +29,9 @@ RE_SEPARATOR = rc('^[\s]*---*[\s]*$')
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
 # Line has a sequence of 10 or more special characters.
-RE_SPECIAL_CHARS = rc(('^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|'
-                       '[\/]|[\%]|[\:]|[\=]){10,}[\s]*$'))
+RE_SPECIAL_CHARS = rc(('^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|[\/]|[\%]|[\:]|[\=]){8,}[\s]*$'))
 
-RE_SIGNATURE_WORDS = rc(('(T|t)hank.*,|(B|b)est|(R|r)egards|'
-                         '^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|(S|s)incerely|'
+RE_SIGNATURE_WORDS = rc(('^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|'
                          '(C|c)orporation|Group'))
 
 # Taken from:
