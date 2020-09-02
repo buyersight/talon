@@ -8,13 +8,13 @@ body belongs to the signature.
 from __future__ import absolute_import
 
 from numpy import genfromtxt
-from sklearn.externals import joblib
+import joblib
 from sklearn.svm import LinearSVC
 
 
 def init():
     """Inits classifier with optimal options."""
-    return LinearSVC(C=10.0)
+    return LinearSVC(C=10.0, max_iter=50000)
 
 
 def train(classifier, train_data_filename, save_classifier_filename=None):
