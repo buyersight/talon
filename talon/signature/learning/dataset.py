@@ -150,7 +150,7 @@ def build_extraction_dataset(folder, dataset_filename,
             print(filename)
             filename = os.path.join(folder, filename)
             sender, msg = parse_msg_sender(filename, sender_known)
-            if not sender or not msg:
+            if not msg:
                 continue
             lines = msg.splitlines()
             for i in range(1, min(SIGNATURE_MAX_LINES,
