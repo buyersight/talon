@@ -9,7 +9,7 @@ applying features to them.
 
 from __future__ import absolute_import
 from talon.signature.constants import (SIGNATURE_MAX_LINES,
-                                       TOO_LONG_SIGNATURE_LINE)
+                                       TOO_LONG_SIGNATURE_LINE, SHORT_LINE)
 from talon.signature.learning.helpers import *
 from six.moves import zip
 from functools import reduce
@@ -25,6 +25,10 @@ def features():
         # Line is too long.
         # This one is less aggressive than `Line is too short`
         lambda line: 1 if len(line) > TOO_LONG_SIGNATURE_LINE else 0,
+        lambda line: 1 if len(line) <= SHORT_LINE else 0,
+        binary_regex_match(RE_SIGNOFF_WORDS),
+        lambda line: 1 if line.endswith((',','!')) else 0,
+        binary_regex_search(RE_PIPE),
         # Line contains email pattern.
         binary_regex_search(RE_EMAIL),
         # Line contains url.

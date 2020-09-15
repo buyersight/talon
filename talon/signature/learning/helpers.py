@@ -31,8 +31,11 @@ RE_SEPARATOR = rc('^[\s]*---*[\s]*$')
 # Line has a sequence of 10 or more special characters.
 RE_SPECIAL_CHARS = rc(('^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|[\/]|[\%]|[\:]|[\=]){8,}[\s]*$'))
 
-RE_SIGNATURE_WORDS = rc(('^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|'
-                         '(C|c)orporation|Group'))
+RE_SIGNATURE_WORDS = rc('^[Ss]ent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|[Cc]orporation|Group|[Cc]onfidential|[Dd][Ii][Ss][Cc][Ll][Aa][Ii][Mm]')
+
+RE_SIGNOFF_WORDS = rc('(?:[Bb]est)|(?:[Rr]egard)|(?:[Tt]hank)')
+
+RE_PIPE = rc('[|]')
 
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
@@ -202,7 +205,7 @@ def many_capitalized_words(s):
 
     The function returns 1 if percentage greater then 65% and 0 otherwise.
     """
-    return 1 if capitalized_words_percent(s) > 66 else 0
+    return 1 if capitalized_words_percent(s) > 50 else 0
 
 
 def has_signature(body, sender):
