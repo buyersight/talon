@@ -8,7 +8,7 @@ from talon import signature
 kwargs = {}
 if sys.version_info > (3, 0):
     kwargs["encoding"] = "utf8"
-test_folder = '/Users/henrywinn/workspace/forge/dataset/split_emails'
+test_folder = '/Users/henrywinn/workspace/forge/dataset/P'
 
 def get_accuracy_stats(annotated_email, extracted_df=None):
     results = {
@@ -56,11 +56,9 @@ results = {
         'fn': 0
     }
 df = pd.DataFrame(columns=['raw','body','sig'])
-for filename in [f for f in os.listdir(test_folder) if not f.startswith('.')]:
+for filename in [f for f in os.listdir(test_folder) if not f.startswith('.') and f.endswith('_body')]:
     filename = os.path.join(test_folder, filename)
     with open(filename, **kwargs) as f:
         msg = f.read()
         msg_results, df = get_accuracy_stats(msg, extracted_df=df)
         results = merge_results(results, msg_results)
-
-print('swag')
